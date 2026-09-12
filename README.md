@@ -18,6 +18,14 @@ The expert-rule analysis covers:
 
 The screening approach uses combinations of clinical findings, laboratory measurements, diagnostic information, and relevant medication history.
 
+## Data Availability
+
+The original patient-level clinical datasets are not included in this repository due to applicable privacy, institutional, and ethical restrictions.
+
+The analysis was performed using clinical, laboratory, diagnostic, demographic, and medication data available to the research team.
+
+Only supporting code and non-identifying analysis results are provided in this repository.
+
 ## Expert Rules
 
 Five predefined expert rules are evaluated based on combinations of clinical and laboratory characteristics, including:
@@ -77,11 +85,3 @@ expert-rules-vs-machine-learning/
 │
 ├── README.md
 └── .gitignore
-
-Data Availability
-
-The original patient-level clinical datasets are not included in this repository due to applicable privacy, institutional, and ethical restrictions.
-
-The analysis was performed using clinical, laboratory, diagnostic, demographic, and medication data available to the research team.
-
-Only supporting code and non-identifying analysis results are provided in this repository.
