@@ -1,0 +1,132 @@
+
+\section{Results and Discussion}
+
+\subsection{Expert Rule-Based Classification Logic}
+
+Algorithm~2 presents the clinical decision rules formulated for rare disease detection, integrating hematological, growth, pulmonary, and neurological indicators. Each rule is built on codified ICD-10 diagnostic criteria, lab thresholds, and patient history, with a priority on early, interpretable identification of suspected Gaucher, ASMD, or Saposin C deficiency cases.
+
+\begin{tcolorbox}[title=Algorithm 2: Expert Rules for Rare Disease Detection]
+\textbf{Input:} Patient diagnosis, lab, clinical, and drug history \\
+\textbf{Output:} Rule1 to Rule5 flags and final prediction
+
+\begin{verbatim}
+if (Organomegaly [R19.00, R19.05, R19.06, R19.09] OR Hepatosplenomegaly [R16.2] OR 
+    Hepatomegaly [R16.0] OR Splenomegaly [R16.1]) AND Abnormal CBC (WBC, Hgb, 
+    Platelet, Neutro Auto #) then
+    Rule1 ← TRUE;
+if Growth retardation [R62.50–R62.59] AND Rule1 then
+    Rule2 ← TRUE;
+if (Growth retardation OR Failure to thrive [R62.7] OR Height/Weight Centile < 3) AND 
+    Rule1 AND Rule2 then
+    Rule3 ← TRUE;
+if Interstitial lung disease [J84.9, J84.10, J84.112, J84.114, J84.848] AND Rule1 then
+    Rule4 ← TRUE;
+if Rule1 AND (Hypotonia [P94.1, P94.2] OR Developmental delay [R62.50, R62.59]) then
+    Rule5 ← TRUE;
+positive_prediction ← Rule1 OR Rule2 OR Rule3 OR Rule4 OR Rule5;
+\end{verbatim}
+\end{tcolorbox}
+
+\subsection{Performance Evaluation}
+
+The expert rules were evaluated across three rare disease datasets using standard classification metrics (Table~\ref{tab:primary}) and extended metrics to address class imbalance (Table~\ref{tab:extended}).
+
+\begin{table}[H]
+\centering
+\caption{Primary Classification Metrics}
+\label{tab:primary}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{ASMD (\%)} & \textbf{Gaucher (\%)} & \textbf{Saposin (\%)} \\
+\midrule
+Accuracy & 27.59 & 77.78 & 70.59 \\
+Precision & 28.57 & 84.62 & 83.33 \\
+Recall & 88.89 & 84.62 & 76.92 \\
+Specificity & 0.00 & 60.00 & 50.00 \\
+F1 Score & 43.24 & 84.62 & 80.00 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Extended Evaluation Metrics}
+\label{tab:extended}
+\begin{tabular}{lccc}
+\toprule
+\textbf{Metric} & \textbf{ASMD (\%)} & \textbf{Gaucher (\%)} & \textbf{Saposin (\%)} \\
+\midrule
+Negative Predictive Value & 0.00 & 60.00 & 40.00 \\
+Balanced Accuracy & 44.44 & 72.31 & 63.46 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Comparative Disease-Specific Outcomes}
+
+\textbf{ASMD:} High sensitivity (Recall: 88.89\%) with specificity of 0\% and poor precision (28.57\%) due to nonspecific triggers.  
+\textbf{Gaucher:} Consistently strong performance across all metrics, validating rule precision.  
+\textbf{Saposin:} Moderate precision and recall with specificity at 50\%; misclassifications often stemmed from incomplete confirmatory records.
+
+\subsection{Confusion Matrix Analysis}
+
+\begin{table}[H]
+\centering
+\caption{Confusion Matrix for ASMD}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Actual \textbackslash{} Predicted} & Positive & Negative \\
+\midrule
+Positive & 8 (TP) & 1 (FN) \\
+Negative & 20 (FP) & 0 (TN) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Confusion Matrix for Gaucher}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Actual \textbackslash{} Predicted} & Positive & Negative \\
+\midrule
+Positive & 11 (TP) & 2 (FN) \\
+Negative & 2 (FP) & 3 (TN) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Confusion Matrix for Saposin}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Actual \textbackslash{} Predicted} & Positive & Negative \\
+\midrule
+Positive & 10 (TP) & 3 (FN) \\
+Negative & 2 (FP) & 2 (TN) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Discussion and Interpretability}
+
+The rule-based model is a transparent, clinically grounded diagnostic aid, ideal for early triage in low-resource settings.  
+
+\textbf{Strengths:}  
+\begin{itemize}
+  \item High recall ensures minimal missed true cases.
+  \item Rules mirror clinical logic, enhancing trust and adoption.
+  \item Gaucher rules demonstrated strong discriminative power.
+\end{itemize}
+
+\textbf{Limitations:}  
+\begin{itemize}
+  \item ASMD rules prone to overflagging due to generic triggers.
+  \item Static thresholds lack contextual adaptability.
+  \item Limited standalone utility in ambiguous or overlapping cases.
+\end{itemize}
+
+\subsection{Future Integration}
+
+These results support using expert rules as front-line screening tools in rare disease pipelines. Integrating them with machine learning classifiers or biochemical follow-ups may improve specificity while retaining clinical transparency.
