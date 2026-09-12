@@ -1,0 +1,31 @@
+# Patient / clinical data
+data/*.csv
+data/*.xlsx
+data/*.parquet
+data/**/*.csv
+data/**/*.xlsx
+data/**/*.parquet
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Environment
+.env
+.venv/
+venv/
